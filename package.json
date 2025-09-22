@@ -1,0 +1,16 @@
+{
+  "name": "Code",
+  "scripts": {
+    "server": "bun run --hot server/index.ts",
+    "client": "cd client && bun run dev",
+    "dev": "concurrently \"bun run server\" \"bun run client\""
+  },
+  "dependencies": {
+    "hono": "^4.9.8"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "concurrency": "^0.1.4",
+    "concurrently": "^9.2.1"
+  }
+}

@@ -3,14 +3,25 @@
   "scripts": {
     "server": "bun run --hot server/index.ts",
     "client": "cd client && bun run dev",
-    "dev": "concurrently \"bun run server\" \"bun run client\""
+    "dev": "concurrently \"bun run server\" \"bun run client\"",
+    "db:up": "docker-compose up -d",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio",
+    "db:seed": "bun run ./scripts/seed-local-db-script.ts"
   },
   "dependencies": {
-    "hono": "^4.9.8"
+    "dotenv": "^17.2.2",
+    "drizzle-orm": "^0.44.5",
+    "drizzle-seed": "^0.3.1",
+    "hono": "^4.9.8",
+    "pg": "^8.16.3"
   },
   "devDependencies": {
     "@types/bun": "latest",
+    "@types/pg": "^8.15.5",
     "concurrency": "^0.1.4",
-    "concurrently": "^9.2.1"
+    "concurrently": "^9.2.1",
+    "drizzle-kit": "^0.31.4"
   }
 }

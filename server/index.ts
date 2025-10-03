@@ -1,10 +1,14 @@
 import { Hono } from "hono";
 import { getTodos } from "./db/queries";
+import { auth } from "./lib/auth";
 
-const app = new Hono();
+const app = new Hono().basePath("/api");
 
 const router = app
-  .get("/api/todos", async (c) => {
+
+  .on(["POST", "GET"], "/auth/*", (c) => auth.handler(c.req.raw))
+
+  .get("/todos", async (c) => {
     try {
       return c.json(await getTodos());
     } catch (e) {
@@ -13,7 +17,7 @@ const router = app
     }
   })
 
-  .get("/api/people", (c) => {
+  .get("/people", (c) => {
     return c.json([
       { id: 1, name: "Alice" },
       { id: 2, name: "Bob" },

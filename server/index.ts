@@ -1,10 +1,16 @@
 import { Hono } from "hono";
+import { getTodos } from "./db/queries";
 
 const app = new Hono();
 
 const router = app
-  .get("/", (c) => {
-    return c.text("Hello Hono!");
+  .get("/api/todos", async (c) => {
+    try {
+      return c.json(await getTodos());
+    } catch (e) {
+      console.error(e);
+      return c.json({ error: "Something went wrong" }, 500);
+    }
   })
 
   .get("/api/people", (c) => {

@@ -1,15 +1,30 @@
 import { Link } from '@tanstack/react-router'
+import { LogIn, LogOut } from 'lucide-react'
+import { useState } from 'react'
+import { authClient } from '../lib/auth-client'
 
 export default function Header() {
-  return (
-    <header className="p-2 flex gap-2 bg-white text-black justify-between">
-      <nav className="flex flex-row">
-        <div className="px-2 font-bold space-x-4">
-          <Link to="/">Home</Link>
+  const [session, setSession] = useState<any>(null)
 
-          <Link to="/todos">Todos</Link>
-        </div>
-      </nav>
+  authClient.useSession()
+  return (
+    <header className="p-2 flex gap-2 bg-base-300 text-white justify-between items-center h-15">
+      <div className="px-2 space-x-4 font-medium">
+        <Link to="/" activeProps={{ className: 'font-bold text-green-500' }}>
+          Home
+        </Link>
+
+        <Link
+          to="/todos"
+          activeProps={{ className: 'font-bold text-green-500' }}
+        >
+          Todos
+        </Link>
+      </div>
+      <div className="flex gap-2">
+        <LogIn />
+        <LogOut />
+      </div>
     </header>
   )
 }

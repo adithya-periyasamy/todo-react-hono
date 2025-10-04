@@ -1,10 +1,13 @@
 import { Hono } from "hono";
+import { cors } from "hono/cors";
 import { getTodos } from "./db/queries";
 import { auth } from "./lib/auth";
 
 const app = new Hono().basePath("/api");
 
 const router = app
+
+  .use(cors())
 
   .on(["POST", "GET"], "/auth/*", (c) => auth.handler(c.req.raw))
 

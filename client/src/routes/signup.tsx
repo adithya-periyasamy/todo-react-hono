@@ -10,7 +10,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast, Toaster } from 'sonner'
 import { z } from 'zod'
@@ -40,11 +40,12 @@ function Signup() {
   const [errorMessage, setErrorMessage] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
 
-  // if (session) {
-  //   router.navigate({
-  //     to: '/todos',
-  //   })
-  // }
+  // Redirect if already logged in
+  useEffect(() => {
+    if (session) {
+      router.navigate({ to: '/todos' })
+    }
+  }, [session, router])
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -89,7 +90,10 @@ function Signup() {
         <h4 className="p-4">Sign up to get started</h4>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-6 w-full p-4"
+          >
             <FormField
               control={form.control}
               name="name"
@@ -152,13 +156,21 @@ function Signup() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="text-black" disabled={loading}>
+            <Button
+              type="submit"
+              className="text-black w-full"
+              disabled={loading}
+            >
               {loading ? 'Signing Up...' : 'Sign Up'}
             </Button>
 
-            {/* Show error on screen */}
+            {/* Error alert using DaisyUI styling */}
             {errorMessage && (
-              <p className="text-red-500 mt-2">{errorMessage}</p>
+              <div className="alert alert-error shadow-lg">
+                <div>
+                  <span>{errorMessage}</span>
+                </div>
+              </div>
             )}
           </form>
         </Form>

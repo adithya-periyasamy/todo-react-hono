@@ -12,6 +12,7 @@
     "db:seed": "bun run ./scripts/seed-local-db-script.ts"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "better-auth": "^1.3.25",
     "dotenv": "^17.2.2",
     "drizzle-orm": "^0.44.5",

@@ -52,14 +52,21 @@ function Signin() {
     setErrorMessage('')
     try {
       // Call auth client sign in; await if it returns a promise
-      // We assume authClient.signIn.email exists similarly to signUp.email
-      // If the API differs, this will need to be adjusted.
-      await authClient.signIn?.email?.({
+      const result = await authClient.signIn.email({
         email: values.email,
         password: values.password,
       })
 
-      // If result indicates error, handle it. We'll optimistic-redirect on success.
+      if (result.error || !result.data?.user.email!) {
+        // No user found or wrong password
+        setErrorMessage(result.error?.message || 'Invalid email or password')
+        toast.error(result.error?.message || 'Invalid email or password')
+        return
+      }
+
+      console.log('Sign-in result:', result)
+
+      // Only redirect if credentials are correct
       toast.success('Signed in successfully!')
       router.navigate({ to: '/todos' })
     } catch (error: any) {

@@ -1,7 +1,6 @@
 import { Hono } from "hono";
 import { auth } from "./lib/auth";
 import { todos } from "./routes/todo.routes";
-
 const app = new Hono().basePath("/api");
 
 const router = app

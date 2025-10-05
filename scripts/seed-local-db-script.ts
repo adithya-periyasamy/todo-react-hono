@@ -4,13 +4,20 @@ import * as schema from "../server/db/schema";
 
 const seedDb = async () => {
   await seed(db, schema).refine((funcs) => ({
+    user: {
+      columns: {},
+      count: 10,
+      with: {
+        todos: 10,
+      },
+    },
     todos: {
       columns: {
         title: funcs.valuesFromArray({
-          values: ["Buy groceries", "Read a book", "Call mom"],
+          values: ["Buy groceries", "read a book", "call mom"],
         }),
         description: funcs.valuesFromArray({
-          values: ["At 5pm", "Weekly", "Carefully", undefined],
+          values: ["at 5pm", "weekly", "carefully", undefined],
         }),
       },
     },

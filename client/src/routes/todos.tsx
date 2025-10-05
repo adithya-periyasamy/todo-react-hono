@@ -27,6 +27,7 @@ function RouteComponent() {
       if (!resp.ok) throw new Error('Failed to fetch todos')
       return resp.json()
     },
+    enabled: !!session, // Only fetch todos if user is authenticated
   })
 
   return (

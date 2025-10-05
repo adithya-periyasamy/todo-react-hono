@@ -1,5 +1,5 @@
 import { Link, useRouter } from '@tanstack/react-router'
-import { LogIn, LogOut } from 'lucide-react'
+import { LogIn, LogOut, ShieldAlert } from 'lucide-react'
 import { useState } from 'react'
 import { Toaster, toast } from 'sonner'
 import { authClient } from '../lib/auth-client'
@@ -35,17 +35,29 @@ export default function Header() {
   return (
     <div>
       <header className="p-2 flex gap-2 bg-base-300 text-white justify-between items-center h-15">
-        <div className="px-2 space-x-4 font-medium">
+        <div className="px-2 font-medium flex items-center gap-4">
           <Link to="/" activeProps={{ className: 'font-bold text-green-500' }}>
             Home
           </Link>
-          <Link
-            to="/todos"
-            activeProps={{ className: 'font-bold text-green-500' }}
-          >
-            Todos
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link
+              to="/todos"
+              activeProps={{ className: 'font-bold text-green-500' }}
+              disabled={!session}
+            >
+              Todos
+            </Link>
+            {!session && (
+              <div
+                className="tooltip tooltip-bottom"
+                data-tip="Sign In to access"
+              >
+                <ShieldAlert />
+              </div>
+            )}
+          </div>
         </div>
+
         <div className="flex gap-2">
           {!session ? (
             <button

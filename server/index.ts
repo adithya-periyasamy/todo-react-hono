@@ -1,25 +1,12 @@
 import { Hono } from "hono";
-import { cors } from "hono/cors";
-import { getTodos } from "./db/queries";
 import { auth } from "./lib/auth";
+import { todos } from "./routes/todo.routes";
 
 const app = new Hono().basePath("/api");
 
 const router = app
-
-  .use(cors())
-
-  .on(["POST", "GET"], "/auth/*", (c) => auth.handler(c.req.raw))
-
-  .get("/todos", async (c) => {
-    try {
-      return c.json(await getTodos());
-    } catch (e) {
-      console.error(e);
-      return c.json({ error: "Something went wrong" }, 500);
-    }
-  })
-
+  .on(["POST", "GET"], "/auth/**", (c) => auth.handler(c.req.raw))
+  .route("/todos", todos)
   .get("/people", (c) => {
     return c.json([
       { id: 1, name: "Alice" },

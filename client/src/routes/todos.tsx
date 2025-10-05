@@ -22,25 +22,29 @@ function RouteComponent() {
 
   return (
     <div className="flex flex-col gap-2 items-center justify-center h-screen">
+      {/* Error alert using DaisyUI styling */}
       {isError && (
-        <div className="alert-error bg-red-500 text-white rounded-md shadow-md p-4">
+        <div className=" flex items-center justify-center bg-red-500 text-white rounded-md shadow-md p-4">
           <CircleX />
           <span>{(error as Error).message}</span>
         </div>
       )}
       {isLoading && (
-        <div className=" flex items-center justify-center skeleton w-[500px] h-[500px] ">
+        <div className=" flex items-center justify-center skeleton  w-[500px] h-[500px] ">
           Loading...
         </div>
       )}
-      {data?.map((todo) => {
-        return (
-          <div className="flex items-center gap-2">
-            <input type="checkbox" className="checkbox" />
-            <div key={todo.id}>{todo.title}</div>
+      <div className="flex flex-col gap-3 items-center justify-center">
+        {data?.map((todo) => (
+          <div
+            key={todo.id}
+            className="flex items-center gap-2 w-64" // fixed width keeps all aligned
+          >
+            <input type="checkbox" className="checkbox text-green-500" />
+            <span>{todo.title}</span>
           </div>
-        )
-      })}
+        ))}
+      </div>
     </div>
   )
 }
